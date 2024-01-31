@@ -5,7 +5,7 @@ import { setShowAddBlog } from "@/app/redux/features/blogs/blogsSlice";
 import { AppDispatch, RootState } from "@/app/redux/store";
 import { ModalBody, ModalFooter, ModalHeader, style } from "@/styles/form";
 import { Alert, Box, Button, Modal, TextField } from "@mui/material";
-import { useMutation } from "@tanstack/react-query";
+import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import SpinnerComponent from "./spinnercomponent";
@@ -19,6 +19,8 @@ const AddBlogComponent = () => {
   const [title, setTitle] = useState<string>("");
   const [author, setAuthor] = useState<string>("");
   const [content, setContent] = useState<string>("");
+
+  const queryClient = useQueryClient();
 
   const blogDataMutation = useMutation(
     async (newBlog) => {
@@ -34,6 +36,7 @@ const AddBlogComponent = () => {
     },
     {
       onSuccess: () => {
+        queryClient.invalidateQueries(["dataBlogs"]);
         handleClose();
       },
     }

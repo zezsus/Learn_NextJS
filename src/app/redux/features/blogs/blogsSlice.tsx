@@ -7,6 +7,13 @@ const initialState: IBlogState = {
   isShowAddBlog: false,
   isShowEditBlog: false,
   isShowDeleteBlog: false,
+  blogId: 0,
+  blogValue: {
+    id: 0,
+    title: "",
+    author: "",
+    content: "",
+  },
 };
 
 export const blogsSlice = createSlice({
@@ -24,9 +31,22 @@ export const blogsSlice = createSlice({
     setShowDeleteBlog: (state: IBlogState, action: PayloadAction<boolean>) => {
       state.isShowDeleteBlog = action.payload;
     },
+
+    setBlogId: (state: IBlogState, action: PayloadAction<number>) => {
+      state.blogId = action.payload;
+    },
+
+    getBlogValue: (state: IBlogState, action: PayloadAction<IBlog>) => {
+      state.blogValue = action.payload;
+    },
   },
 });
 
-export const { setShowAddBlog, setShowEditBlog, setShowDeleteBlog } =
-  blogsSlice.actions;
+export const {
+  setShowAddBlog,
+  setShowEditBlog,
+  setShowDeleteBlog,
+  setBlogId,
+  getBlogValue,
+} = blogsSlice.actions;
 export default blogsSlice.reducer;

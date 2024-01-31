@@ -21,6 +21,8 @@ import {
 import { useDispatch, useSelector } from "react-redux";
 import { AppDispatch, RootState } from "../redux/store";
 import {
+  getBlogValue,
+  setBlogId,
   setShowAddBlog,
   setShowDeleteBlog,
   setShowEditBlog,
@@ -65,16 +67,18 @@ const BlogPage = () => {
     dispatch(setShowAddBlog(true));
   };
 
-  const handleShowEditBlog = () => {
+  const handleShowEditBlog = (blog: IBlog) => {
     dispatch(setShowEditBlog(true));
+    dispatch(getBlogValue(blog));
   };
 
-  const handleShowDeleteBlog = () => {
+  const handleShowDeleteBlog = (blogId: number) => {
     dispatch(setShowDeleteBlog(true));
+    dispatch(setBlogId(blogId));
   };
 
   return (
-    <Stack pt={1} bgcolor={"#b8b8b8"} height={"92.4vh"}>
+    <Stack pt={1} bgcolor={"#b8b8b8"} height={"90.1vh"}>
       <Container>
         <Button variant='contained' sx={{ mb: 2 }} onClick={handleShowAddBlog}>
           <AddIcon />
@@ -104,11 +108,12 @@ const BlogPage = () => {
                           <PreviewIcon color='primary' />
                         </IconButton>
 
-                        <IconButton onClick={handleShowEditBlog}>
+                        <IconButton onClick={() => handleShowEditBlog(item)}>
                           <EditCalendarIcon color='warning' />
                         </IconButton>
 
-                        <IconButton onClick={handleShowDeleteBlog}>
+                        <IconButton
+                          onClick={() => handleShowDeleteBlog(item.id)}>
                           <DeleteForeverIcon color='error' />
                         </IconButton>
                       </TableCell>

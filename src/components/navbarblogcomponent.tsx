@@ -15,7 +15,7 @@ const NavBlogComponent = () => {
   return (
     <AppBar position='static'>
       <Container>
-        <Stack>
+        <Stack p={1}>
           <Box display={"flex"} alignItems={"center"}>
             <IconButton>
               <HomeIcon sx={{ color: "white", fontSize: 30 }} />

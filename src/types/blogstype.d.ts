@@ -12,5 +12,6 @@ interface IBlogState {
   isShowEditBlog: boolean;
   isShowDeleteBlog: boolean;
   blogId: number;
-  blogValue:IBlog
+  blogValue: IBlog;
+  searchValue: string;
 }

@@ -5,6 +5,8 @@ import { Inter } from "next/font/google";
 import "./globals.css";
 import NavBlogComponent from "@/components/navbarblogcomponent";
 import "react-notifications/lib/notifications.css";
+import ReduxProvider from "./providers/reduxprovider";
+import ReactQueryProvider from "./providers/reactqueryprovider";
 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -21,10 +23,14 @@ export default function RootLayout({
   return (
     <html lang='en'>
       <body className={inter.className}>
-        <header>
-          <NavBlogComponent />
-        </header>
-        {children}
+        <ReduxProvider>
+          <ReactQueryProvider>
+            <header>
+              <NavBlogComponent />
+            </header>
+            {children}
+          </ReactQueryProvider>
+        </ReduxProvider>
       </body>
     </html>
   );

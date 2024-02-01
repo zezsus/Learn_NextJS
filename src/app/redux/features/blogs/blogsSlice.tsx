@@ -14,6 +14,7 @@ const initialState: IBlogState = {
     author: "",
     content: "",
   },
+  searchValue: "",
 };
 
 export const blogsSlice = createSlice({
@@ -39,6 +40,10 @@ export const blogsSlice = createSlice({
     getBlogValue: (state: IBlogState, action: PayloadAction<IBlog>) => {
       state.blogValue = action.payload;
     },
+
+    getSearchValue: (state: IBlogState, action: PayloadAction<string>) => {
+      state.searchValue = action.payload;
+    },
   },
 });
 
@@ -48,5 +53,6 @@ export const {
   setShowDeleteBlog,
   setBlogId,
   getBlogValue,
+  getSearchValue,
 } = blogsSlice.actions;
 export default blogsSlice.reducer;

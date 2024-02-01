@@ -32,6 +32,8 @@ import EditBlogComponent from "@/components/editblogcomponent";
 import DeleteBlogComponent from "@/components/deleteblogcomponent";
 import { useQuery } from "@tanstack/react-query";
 import SpinnerComponent from "@/components/spinnercomponent";
+import Link from "next/link";
+import { useEffect, useState } from "react";
 
 const BlogPage = () => {
   const isShowAddBlog = useSelector(
@@ -43,10 +45,13 @@ const BlogPage = () => {
   const isShowDeleteBlog = useSelector(
     (state: RootState) => state.blogs.isShowDeleteBlog
   );
+  const searchValue = useSelector(
+    (state: RootState) => state.blogs.searchValue
+  );
 
   const dispatch = useDispatch<AppDispatch>();
 
-  const { isLoading, isError, data, error } = useQuery({
+  const { isLoading, data } = useQuery({
     queryKey: ["dataBlogs"],
     queryFn: async () => {
       const res = await fetch("http://localhost:8000/blogs");
@@ -57,10 +62,6 @@ const BlogPage = () => {
 
   if (isLoading) {
     return <SpinnerComponent />;
-  }
-
-  if (isError) {
-    return console.log(error);
   }
 
   const handleShowAddBlog = () => {
@@ -78,7 +79,7 @@ const BlogPage = () => {
   };
 
   return (
-    <Stack pt={1} bgcolor={"#b8b8b8"} height={"90.1vh"}>
+    <Stack pt={1} bgcolor={"#b8b8b8"} height={"89.8vh"}>
       <Container>
         <Button variant='contained' sx={{ mb: 2 }} onClick={handleShowAddBlog}>
           <AddIcon />
@@ -95,7 +96,7 @@ const BlogPage = () => {
                 </TableRow>
               </TableHead>
               <TableBody>
-                {data.map((item: IBlog, index: number) => {
+                {data?.map((item: IBlog, index: number) => {
                   return (
                     <TableRow key={item.id}>
                       <TableCell sx={{ fontWeight: "bold" }}>
@@ -104,9 +105,11 @@ const BlogPage = () => {
                       <TableCell>{item.title}</TableCell>
                       <TableCell>{item.author}</TableCell>
                       <TableCell>
-                        <IconButton>
-                          <PreviewIcon color='primary' />
-                        </IconButton>
+                        <Link href={`/blogs/${item.id}`}>
+                          <IconButton>
+                            <PreviewIcon color='primary' />
+                          </IconButton>
+                        </Link>
 
                         <IconButton onClick={() => handleShowEditBlog(item)}>
                           <EditCalendarIcon color='warning' />
